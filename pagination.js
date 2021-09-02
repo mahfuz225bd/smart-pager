@@ -3,7 +3,7 @@ function pagination(data, perPage) {
 	const recordsLastPage = totalRec % perPage;
 
 	// Getting page ranges \w 2-dimensional array
-	const pageRange = () => {
+	const pageRanges = () => {
 		const result = [];
 
 		// For first record
@@ -36,7 +36,7 @@ function pagination(data, perPage) {
 
 	const paginatedData = [];
 
-	pageRange().forEach((eachRange) => {
+	pageRanges().forEach((eachRange) => {
 		const from = eachRange[0];
 		const to = eachRange[1];
 
