@@ -1,47 +1,63 @@
-function pagination(data, perPage) {
-	const totalRec = data.length;
-	const recordsLastPage = totalRec % perPage;
+class SmartPager {
+  constructor(data = [], perPage = 10) {
+    this._data = data; // Private-like property (not strictly private)
+    this._perPage = perPage;
+  }
 
-	// Getting page ranges \w 2-dimensional array
-	const pageRanges = () => {
-		const result = [];
+  // Setter for data
+  set data(newData) {
+    if (!Array.isArray(newData)) {
+      throw new Error("Data must be an array.");
+    }
+    this._data = newData;
+  }
 
-		// For first record
-		result.push([0, perPage]);
+  // Getter for data
+  get data() {
+    return this._data;
+  }
 
-		for (let i = 1; i < parseInt(totalRec / perPage); i++) {
-			result.push([perPage * i + 1, perPage * (i + 1)]);
-		}
+  // Setter for perPage
+  set perPage(newPerPage) {
+    if (typeof newPerPage !== "number" || newPerPage <= 0) {
+      throw new Error("Per page value must be a positive number.");
+    }
+    this._perPage = newPerPage;
+  }
 
-		// recordsLastPage is odd (or extra records need to show)
-		if (recordsLastPage) {
-			const prevLast = result[result.length - 1][1];
-			result.push([prevLast + 1, prevLast + recordsLastPage]);
-		}
+  // Getter for perPage
+  get perPage() {
+    return this._perPage;
+  }
 
-		return result;
-	};
+  // Getter for total records
+  get totalRec() {
+    return this._data.length;
+  }
 
-	// Showing data \w index range
-	const showData = (from, to) => {
-		const result = [];
+  // Getter for total pages
+  get totalPages() {
+    return Math.ceil(this.totalRec / this._perPage);
+  }
 
-		for (let i = from; i < to + 1; i++) {
-			const element = data[i];
-			result.push(element);
-		}
+  // Method to generate page ranges
+  getPageRanges() {
+    return Array.from({ length: this.totalPages }, (_, i) => {
+      const start = i * this._perPage;
+      const end = Math.min(start + this._perPage, this.totalRec);
+      return [start, end];
+    });
+  }
 
-		return result;
-	};
+  // Method to get data for a specific page
+  getPageData(from, to) {
+    return this._data.slice(from, to);
+  }
 
-	const paginatedData = [];
-
-	pageRanges().forEach((eachRange) => {
-		const from = eachRange[0];
-		const to = eachRange[1];
-
-		paginatedData.push(showData(from, to));
-	});
-  
-	return paginatedData;
+  // Method to get all paginated data
+  getPaginatedData() {
+    return this.getPageRanges().map(([from, to]) => this.getPageData(from, to));
+  }
 }
+
+export default SmartPager;
