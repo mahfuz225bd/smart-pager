@@ -19,7 +19,7 @@
 You can import `SmartPager` into your JavaScript file using:
 
 ```javascript
-import SmartPager from 'path/to/SmartPager';
+import SmartPager from 'SmartPager';
 ```
 
 ### Usage
