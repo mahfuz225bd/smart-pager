@@ -1,6 +1,6 @@
 # SmartPager
 
-**SmartPager** is a JavaScript class designed to handle pagination of data. It offers functionality to manage paginated data efficiently, providing methods to retrieve data for specific pages, calculate the total number of pages, and more.
+**SmartPager** is a JavaScript library designed to handle pagination of data. It offers functionality to manage paginated data efficiently, providing methods to retrieve data for specific pages, calculate the total number of pages, and more.
 
 ## Documentation
 
